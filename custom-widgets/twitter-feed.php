@@ -22,8 +22,26 @@
 			$num = $instance['num'];
 			$username = str_replace("@", "", $instance['username']);
 			
-			$tweets = json_decode(get_file('https://api.twitter.com/1.1/statuses/user_timeline.json?include_entities=true&include_rts=true&screen_name='.$username.'&count='.$num));
+			$req_array = array(
+				'/_horizon/api/twitter/twitteroauth/OAuth.php',
+				'/_horizon/api/twitter/twitteroauth/twitteroauth.php'
+			);
+			foreach($req_array as $req){
+				$t = get_root_directory( $req );
+				require($t . $req); 
+			}
 			
+			$connection = new TwitterOAuth(
+				'j34xFIWv7OOEJmdNIBmnoQ', // consumer key
+				'HF484csEMoAxMjHA7Vl60QwrLIOCS24ntXDLypaB0', // consumer secret
+				'1259167478-EnSlyFhBOt4LQK47VJ4UkUIIIBjtiKXC90JHVpY', // oauth access token
+				'sD4RltXLPqkSg5zFVT6BqrGoV8b7F19Bx588o1hwO4' // oauth access secret
+			);
+			$tweets = $connection->get('statuses/user_timeline', array(
+				'screen_name' => $username,
+				'count' => $num
+			));
+
 			echo $before_widget;
 	
 			// Display the widget title 
