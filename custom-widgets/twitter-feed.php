@@ -22,7 +22,7 @@
 			$num = $instance['num'];
 			$username = str_replace("@", "", $instance['username']);
 			
-			$tweets = json_decode(get_file('https://api.twitter.com/1/statuses/user_timeline.json?include_entities=true&include_rts=true&screen_name='.$username.'&count='.$num.''));
+			$tweets = json_decode(get_file('https://api.twitter.com/1.1/statuses/user_timeline.json?include_entities=true&include_rts=true&screen_name='.$username.'&count='.$num));
 			
 			echo $before_widget;
 	
