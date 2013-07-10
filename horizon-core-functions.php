@@ -311,12 +311,16 @@
 	}
 	
 	// Format tags
-	function horizon_format_tags($tags, $echo=true){
+	function horizon_format_tags($tags, $echo=true, $separator, $link=true){
 		$num = sizeof($tags);
 		$tag_string = '';
 		for($i=0; $i<$num; $i++){
-			$comma = $i!==$num-1 ? ", " : "";
-			$tag_string .= '<a class="tag" href="'.get_tag_link($tags[$i]).'">'.$tags[$i]->name.'</a>' . $comma;
+			$comma = $i!==$num-1 ? $separator : "";
+			if($link){
+				$tag_string .= '<a class="tag" href="'.get_tag_link($tags[$i]).'">'.$tags[$i]->name.'</a>' . $comma;
+			} else {
+				$tag_string .= '<span class="tag">'.$tags[$i]->name.'</span>' . $comma;
+			}
 		} 
 		
 		if($echo){echo $tag_string;}
